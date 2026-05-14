@@ -1,6 +1,5 @@
 class Solution {
     public String shiftingLetters(String s, int[][] shifts) {
-        StringBuilder sb = new StringBuilder(s);
         int[] diff = new int[s.length()];
 
         for(int[] q : shifts) {
@@ -10,15 +9,16 @@ class Solution {
             if(q[1] + 1 < diff.length) diff[q[1] + 1] -= a; 
         }
 
+        char[] sb = s.toCharArray();
         int cumsum = 0;
 
         for(int i = 0; i<diff.length; i++) {
             cumsum += diff[i];
-            int a = cumsum + (sb.charAt(i) - 'a');
+            int a = cumsum + (s.charAt(i) - 'a');
             int mod = (a % 26 + 26) % 26;
-            sb.setCharAt(i,(char)(mod + 'a'));
+            sb[i] = (char)(mod + 'a');
         }
 
-        return sb.toString();
+        return new String(sb);
     }
 }
