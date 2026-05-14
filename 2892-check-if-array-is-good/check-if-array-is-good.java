@@ -1,12 +1,18 @@
 class Solution {
     public boolean isGood(int[] nums) {
-        if(nums.length == 1) return false;
-        Arrays.sort(nums);
+        Set<Integer> st = new HashSet<>();
 
-        for(int i = 0; i<nums.length - 1; i++) {
-            if(nums[i] != i+1) return false;
+        for(int num : nums) {
+            if(st.contains(num) && num != nums.length - 1) return false;
+            st.add(num);
         }
 
-        return nums[nums.length-1] == nums[nums.length-2] ? true : false;
+        if(st.size() != nums.length - 1) return false;
+
+        for(int i = 1; i <= nums.length - 1; i++) {
+            if(!st.contains(i)) return false;
+        }
+
+        return true;
     }
 }
