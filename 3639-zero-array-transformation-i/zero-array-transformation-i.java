@@ -3,10 +3,8 @@ class Solution {
         int[] diff = new int[nums.length];
 
         for(int i = 0; i<queries.length; i++) {
-            int l = queries[i][0];
-            int r = queries[i][1];
-            diff[l]--;
-            if(r + 1 < diff.length) diff[r+1]++;
+            diff[queries[i][0]]--;
+            if(queries[i][1] + 1 < diff.length) diff[queries[i][1]+1]++;
         }
         
         int cumsum = 0;
