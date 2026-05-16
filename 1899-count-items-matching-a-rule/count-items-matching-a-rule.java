@@ -3,12 +3,12 @@ class Solution {
         int cnt = 0;
 
         for(int i = 0; i<items.size(); i++) {
-            if(ruleKey.equals("type")) {
-                if(items.get(i).get(0).equals(ruleValue)) cnt++;
-            } else if (ruleKey.equals("color")) {
-                if(items.get(i).get(1).equals(ruleValue)) cnt++;
-            } else {
-                if(items.get(i).get(2).equals(ruleValue)) cnt++;
+            if(ruleKey.equals("type") && items.get(i).get(0).equals(ruleValue)) {
+                cnt++;
+            } else if (ruleKey.equals("color") && items.get(i).get(1).equals(ruleValue)) {
+                cnt++;
+            } else if (ruleKey.equals("name") && items.get(i).get(2).equals(ruleValue)) {
+                cnt++;
             }
         }
 
