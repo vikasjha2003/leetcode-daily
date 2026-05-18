@@ -9,7 +9,7 @@ public:
             pos[arr[i]].push_back(i);
         }
 
-        vector<char> vis (n,false);
+        vector<bool> vis (n,false);
         int cnt = 0;
 
         queue<int> q;
