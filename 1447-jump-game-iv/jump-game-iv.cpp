@@ -9,7 +9,7 @@ public:
             pos[arr[i]].push_back(i);
         }
 
-        vector<bool> vis (n,false);
+        vector<char> vis (n,false);
         int cnt = 0;
 
         queue<int> q;
@@ -37,9 +37,7 @@ public:
                         vis[val] = true;
                     }
                 }
-                if(pos.find(arr[idx]) != pos.end()) {
-                    pos.erase(arr[idx]);
-                }
+                pos[arr[idx]].clear();
             }
             cnt++;
         }
