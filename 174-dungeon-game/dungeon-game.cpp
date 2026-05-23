@@ -1,33 +1,24 @@
 class Solution {
 public:
-    int m , n;
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        int m = dungeon.size();
+        int n = dungeon[0].size();
 
-    int dung (vector<vector<int>>& dungeon, int row , int col, vector<vector<int>> &dp) {
-        if(row == m-1 && col == n-1) {
-            if(dungeon[row][col] < 0) return dungeon[row][col] - 1;
-            return -1;
+        vector<vector<int>> dp (m + 1, vector<int> (n + 1,INT_MAX));
+        if(dungeon[m-1][n-1] < 0) dp[m-1][n-1] = -dungeon[m-1][n-1] + 1;
+        else dp[m-1][n-1] = 1;
+
+        for(int i = m-1; i>=0; i--) {
+            for(int j = n-1; j>=0; j--) {
+                if(i == m-1 && j == n-1) continue;
+
+                int minhealth = min(dp[i+1][j] , dp[i][j+1]) - dungeon[i][j];
+
+                if(minhealth > 0) dp[i][j] = minhealth;
+                else dp[i][j] = 1;
+            }
         }
 
-        if(dp[row][col] != 0) return dp[row][col];
-
-        
-        int down = INT_MIN;
-        int right = INT_MIN;
-        if(row != m-1) down = dung(dungeon,row + 1,col, dp);
-        if(col != n-1) right = dung(dungeon,row,col + 1, dp);
-
-        int minfromhere = max(down,right) + dungeon[row][col];
-
-        if(minfromhere < 0) return dp[row][col] = minfromhere;
-        else return dp[row][col] = -1; 
-    }
-
-    int calculateMinimumHP(vector<vector<int>>& dungeon) {
-        m = dungeon.size();
-        n = dungeon[0].size();
-
-        vector<vector<int>> dp (m, vector<int> (n,0));
-
-        return -1 * dung(dungeon,0,0,dp);
+        return dp[0][0];
     }
 };
