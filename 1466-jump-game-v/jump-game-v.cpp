@@ -30,7 +30,9 @@ public:
         int res = 0;
 
         for(int i = 0; i<n; i++) {
-            res = max(res,solve(arr,d,i,dp)); 
+            if(dp[i] == 0) {
+                res = max(res,solve(arr,d,i,dp)); 
+            }
         }
 
         return res;
