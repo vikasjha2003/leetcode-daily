@@ -4,41 +4,31 @@ public:
         int n = landS.size();
         int m = waterS.size();
 
-        vector<pair<int,int>> v1 (n);
-        vector<pair<int,int>> v2 (m);
+        int land = INT_MAX;
+        int water = INT_MAX; 
 
-        for(int i = 0; i<n; i++) {
-            v1[i] = {landS[i],landD[i]};
+        for(int i = 0; i < max(n,m); i++) {
+            if(i < n) land = min(land,landS[i] + landD[i]);
+            if(i < m) water = min(water,waterS[i] + waterD[i]);
         }
-
-        for(int i = 0; i<m; i++) {
-            v2[i] = {waterS[i],waterD[i]};
-        }
-
-
-        sort(v1.begin(),v1.end(), [] (const auto &p1, const auto &p2) {
-            return p1.first + p1.second < p2.first + p2.second;
-        });
-
-        sort(v2.begin(),v2.end(), [] (const auto &p1, const auto &p2) {
-            return p1.first + p1.second < p2.first + p2.second;
-        });
 
         int ans = INT_MAX;
 
-        for(int i = 0; i<m; i++) {
-            if(v2[i].first >= v1[0].first + v1[0].second) {
-                ans = min(ans,v2[i].first + v2[i].second);
-            } else {
-                ans = min(ans,v1[0].first + v1[0].second + v2[i].second);
+        for(int i = 0; i < max(m,n); i++) {
+            if(i < m) {
+                if(waterS[i] >= land) {
+                    ans = min(ans,waterS[i] + waterD[i]);
+                } else {
+                    ans = min(ans,land + waterD[i]);
+                }   
             }
-        }
 
-        for(int i = 0; i<n; i++) {
-            if(v1[i].first >= v2[0].first + v2[0].second) {
-                ans = min(ans,v1[i].first + v1[i].second);
-            } else {
-                ans = min(ans,v2[0].first + v2[0].second + v1[i].second);
+            if(i < n) {
+                if(landS[i] >= water) {
+                    ans = min(ans,landS[i] + landD[i]);
+                } else {
+                    ans = min(ans,water + landD[i]);
+                }
             }
         }
 
