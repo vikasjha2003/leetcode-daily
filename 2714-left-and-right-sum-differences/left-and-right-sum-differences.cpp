@@ -4,18 +4,13 @@ public:
         int n = nums.size();
 
         vector<int> res (n,0);
-        int sum = 0;
+        int sum = accumulate(nums.begin(),nums.end(), 0);
+        int lsum = 0;
 
         for(int i = 0; i<n; i++) {
-            res[i] = sum;
-            sum += nums[i];
-        }
-
-        sum = 0;
-
-        for(int i = n-1; i >= 0; i--) {
-            res[i] = abs(res[i] - sum);
-            sum += nums[i];
+            sum -= nums[i];
+            res[i] = abs(lsum - sum);
+            lsum += nums[i];
         }
 
         return res;
