@@ -22,9 +22,6 @@ public:
     }
     bool canPartition(vector<int>& nums) {
         int sum = accumulate(nums.begin(),nums.end(),0);
-        if(sum % 2 == 1) return false;
-        else {
-            return isSubsetSum(nums,sum/2);
-        } 
+        return sum % 2 ? false : isSubsetSum(nums,sum/2);
     }
 };
