@@ -23,7 +23,8 @@ public:
             arr.push_back(count(strs[i]));
         }
 
-        vector<vector<vector<int>>> dp (s+1, vector<vector<int>> (m+1, vector<int> (n+1, 0)));
+        int dp[s+1][m+1][n+1];
+        memset(dp, 0, sizeof(dp));
 
         for(int i = s-1; i >= 0; i--) {
             for(int j = m; j >= 0; j--) {
