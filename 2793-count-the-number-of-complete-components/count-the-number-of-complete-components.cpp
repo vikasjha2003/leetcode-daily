@@ -1,13 +1,24 @@
 class Solution {
 public:
 
-    void DFS (vector<vector<int>> &adj, vector<int> &visited, vector<pair<int,int>> &bucket, int node) {
+    void BFS (vector<vector<int>> &adj, vector<int> &visited, 
+    vector<pair<int,int>> &bucket, int node) {
+
+        queue<int> q;
+        q.push(node);
         visited[node] = true;
         bucket.push_back({node,adj[node].size()});
 
-        for(int next : adj[node]) {
-            if(!visited[next]) {
-                DFS(adj,visited,bucket,next);
+        while(!q.empty()) {
+            int cur = q.front();
+            q.pop();
+
+            for(int next : adj[cur]) {
+                if(!visited[next]) {
+                    q.push(next);
+                    visited[next] = true;
+                    bucket.push_back({next,adj[next].size()});
+                }
             }
         }
     }
@@ -28,7 +39,7 @@ public:
         for(int i = 0; i<n; i++) {
             if(!visited[i]) {
                 vector<pair<int,int>> bucket;
-                DFS(adj,visited,bucket,i);
+                BFS(adj,visited,bucket,i);
 
                 int a = bucket[0].second;
 
