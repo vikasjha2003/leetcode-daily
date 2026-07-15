@@ -18,7 +18,9 @@ public:
         n = nums.size();
 
         int maxi = *max_element(nums.begin(), nums.end());
-        vector<vector<vector<int>>> dp (n+1 ,vector<vector<int>> (maxi+1 ,vector<int> (maxi+1,0)));
+        int dp[n+1][maxi+1][maxi+1];
+
+        memset(dp,0,sizeof(dp));
         
         for(int i = 1; i<= maxi; i++) {
             dp[n][i][i] = 1;
