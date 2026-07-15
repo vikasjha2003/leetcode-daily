@@ -34,7 +34,8 @@ public:
 
     int subsequencePairCount(vector<int>& nums) {
         n = nums.size();
-        vector<vector<vector<int>>> dp (n, vector<vector<int>> (201, vector<int> (201,-1)));
+        int maxi = *max_element(nums.begin(), nums.end());
+        vector<vector<vector<int>>> dp (n, vector<vector<int>> (maxi +1 , vector<int> (maxi +1,-1)));
         return subcount(nums,0,0,0,dp);
     }
 };
