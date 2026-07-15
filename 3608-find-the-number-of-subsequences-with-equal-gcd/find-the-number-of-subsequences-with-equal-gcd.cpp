@@ -20,7 +20,7 @@ public:
         int maxi = *max_element(nums.begin(), nums.end());
         vector<vector<vector<int>>> dp (n+1 ,vector<vector<int>> (maxi+1 ,vector<int> (maxi+1,0)));
         
-        for(int i = 0; i<= maxi; i++) {
+        for(int i = 1; i<= maxi; i++) {
             dp[n][i][i] = 1;
         }
 
@@ -36,6 +36,6 @@ public:
             }
         }
 
-        return dp[0][0][0] -1;
+        return dp[0][0][0];
     }
 };
