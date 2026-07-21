@@ -8,17 +8,9 @@ public:
 
         int sec = 3600;
 
-        for(int i = 0; i<n; i++) {
-            string str = "";
-            string stri = "";
-            while(i < n && startTime[i] != ':') {
-                str += startTime[i];
-                stri += endTime[i];
-                i++;
-            }
-            
-            st += stoi(str) * sec;
-            en += stoi(stri) * sec;
+        for(int i = 0; i<n; i+=3) {     
+            st += stoi(startTime.substr(i,2)) * sec;
+            en += stoi(endTime.substr(i,2)) * sec;
 
             sec /= 60;     
         }
