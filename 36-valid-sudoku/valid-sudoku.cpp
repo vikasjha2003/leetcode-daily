@@ -1,7 +1,7 @@
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
-        // Horizontal
+        // Horizontal and vertical
         for(int i = 0; i<9; i++) {
             unordered_set<int> st;
             for(int j = 0; j<9; j++) {
@@ -9,15 +9,12 @@ public:
                 if(st.find(board[i][j]) != st.end()) return false;
                 st.insert(board[i][j]);
             }
-        }
-
-        // vertical
-        for(int i = 0; i<9; i++) {
-            unordered_set<int> st;
+            
+            unordered_set<int> s;
             for(int j = 0; j<9; j++) {
                 if(board[j][i] == '.') continue;
-                if(st.find(board[j][i]) != st.end()) return false;
-                st.insert(board[j][i]);
+                if(s.find(board[j][i]) != s.end()) return false;
+                s.insert(board[j][i]);
             }
         }
 
