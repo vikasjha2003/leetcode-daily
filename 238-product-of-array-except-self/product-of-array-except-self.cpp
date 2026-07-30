@@ -4,17 +4,16 @@ public:
         int n = nums.size();
 
         vector<int> prefprod (n);
-        int prod = 1;
-        for(int i = 0; i<n; i++) {
-            prod *= nums[i];
-            prefprod[i] = prod;
-        }
-
         vector<int> suffprod(n);
-        prod = 1;
-        for(int i = n-1; i>=0; i--) {
-            prod *= nums[i];
-            suffprod[i] = prod;
+        int prod1 = 1;
+        int prod2 = 1;
+        
+        for(int i = 0; i<n; i++) {
+            prod1 *= nums[i];
+            prefprod[i] = prod1;
+
+            prod2 *= nums[n-i-1];
+            suffprod[n-i-1] = prod2;
         }
 
         vector<int> res (n);
