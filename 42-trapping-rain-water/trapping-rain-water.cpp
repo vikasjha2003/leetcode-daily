@@ -2,20 +2,20 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n = height.size();
-        int left = 0;
+
         int right = 0;
-        vector<int> res (n,INT_MAX);
+        vector<int> rmax (n,INT_MAX);
 
         for(int i = 0; i<n; i++) {
-            left = max(left,height[i]);
-            res[i] = min(res[i],left);
             right = max(right,height[n-i-1]);
-            res[n-i-1] = min(res[n-i-1],right);
+            rmax[n-i-1] = min(rmax[n-i-1],right);
         }
 
         int rain = 0;
+        int lmax = 0;
         for(int i = 0; i<n; i++) {
-            rain += res[i] - height[i];
+            lmax = max(height[i],lmax);
+            rain += min(rmax[i],lmax) - height[i];
         }
 
         return rain;
