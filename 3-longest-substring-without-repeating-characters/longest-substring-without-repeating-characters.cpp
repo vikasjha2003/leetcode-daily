@@ -14,12 +14,11 @@ public:
                 st.insert(s[right]);
                 right++;
                 maxLen = max(right - left,maxLen);
-                continue;
-            }
-
-            while(st.find(s[right]) != st.end()) {
-                st.erase(s[left]);
-                left++;
+            } else {
+                while(st.find(s[right]) != st.end()) {
+                    st.erase(s[left]);
+                    left++;
+                }
             }
         }
 
