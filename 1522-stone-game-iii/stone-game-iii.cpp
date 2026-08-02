@@ -14,6 +14,7 @@ public:
             sum += stoneValue[idx+i-1];
             int next = idx + i;
             int cur = INT_MAX;
+            
             for(int j = 1; j<= 3; j++) {
                 cur = min(cur,solve(stoneValue,next + j,dp));
             }
