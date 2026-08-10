@@ -4,10 +4,10 @@ public:
         if(n == 0) return false;
         if(dp[n] != -1) return dp[n];
 
-        for(int i = 0; i < range.size(); i++) {
-            if(range[i] > n) break;
+        for(int it : range) {
+            if(it > n) break;
 
-            if(!solve(range,n - range[i],dp)) return dp[n] = true;
+            if(!solve(range,n-it,dp)) return dp[n] = true;
         }
 
         return dp[n] = false;
