@@ -8,7 +8,7 @@ class Solution:
                 k += 1
                 i += 1
                 continue
-            if nums[i] > nums[k] and nums[i] != nums[i-1] :
+            if nums[i] != nums[k-1] :
                 nums[k] = nums[i]
                 k += 1
             i += 1
