@@ -1,29 +1,22 @@
 class Solution:
     def missingInteger(self, nums: List[int]) -> int:
+        n = len(nums)
+        st = set()
         sum = nums[0]
-        for i in range (1,len(nums)) :
-            if nums[i] == nums[i-1] + 1 :
+        flag = True
+        st.add(nums[0])
+        for i in range (1,n) :
+            if nums[i] == nums[i-1] + 1 and flag == True :
                 sum += nums[i]
-            else :
-                break
-
-        nums.sort()
-        while True :
-            low = 0
-            high = len(nums) -1
-            flag = False
-            while low <= high :
-                mid = low + (high - low) // 2
-
-                if nums[mid] == sum :
-                    flag = True
-                    break
-                elif nums[mid] < sum :
-                    low = mid + 1
-                else :
-                    high = mid - 1
+            elif flag == True :
+                flag = False
             
-            if not flag : return sum
-            else : sum += 1
+            st.add(nums[i])
+
+        while True :
+            if sum not in st :
+                return sum
+            else : 
+                sum += 1
 
         return -1
