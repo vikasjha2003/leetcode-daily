@@ -1,10 +1,13 @@
 class Solution:
     def fib(self, n: int) -> int:
-        cur = 1
+        if n == 0 or n == 1 : return n
+
         prev = 0
-        if n == cur or n == prev : return n
+        cur = 1
+
         for i in range(2,n+1) :
-            temp = cur + prev
+            temp = prev + cur
             prev = cur
             cur = temp
-        return cur
+        
+        return temp
