@@ -1,24 +1,25 @@
 class FindElements {
 public:
     unordered_set<int> st;
-    void buildTree(TreeNode* root) {
-        if(root-> val == -1) {
-            root->val = 0;
-            st.insert(0);
-        }
-        if(root->left) {
-            root->left->val = root->val * 2 + 1;
-            st.insert(root->left->val);
-            buildTree(root->left);
-        }
-        if(root->right) {
-            root->right->val = root->val * 2 + 2;
-            st.insert(root->right->val);
-            buildTree(root->right);
-        }
-    }
     FindElements(TreeNode* root) {
-        buildTree(root);
+        queue<TreeNode*> q;
+        root-> val = 0;
+        q.push(root);
+
+        while(!q.empty()) {
+            TreeNode* temp = q.front();
+            q.pop();
+            st.insert(temp->val);
+            
+            if(temp -> left) {
+                temp->left->val = temp->val * 2 + 1;
+                q.push(temp->left);
+            }
+            if(temp -> right) {
+                temp->right->val = temp->val * 2 + 2;
+                q.push(temp->right);
+            }
+        }
     }
     
     bool find(int target) {
