@@ -1,25 +1,23 @@
 class Solution {
 public:
-    int numDecodings(string s) {
-        int n = s.length();
+    int n;
 
-        vector<int> dp (n+2,0);
-        dp[n] = 1;
-        dp[n+1] = 1;
+    int solve(string &s, int idx, vector<int> &dp) {
+        if(idx >= n) return 1;
+        if(s[idx] == '0') return 0;
+        if(dp[idx] != -1) return dp[idx];
 
-        for(int i = n-1; i>= 0; i--) {
-            if(s[i] == '0') {
-                dp[i] = 0;
-                continue;
-            }
-
-            if(i < n-1 && (s[i] == '1' || (s[i] == '2' && s[i+1] >= '0' && s[i+1] <= '6'))) {
-                dp[i] = dp[i+2] + dp[i+1];
-            } else {
-                dp[i] = dp[i+1];
-            }
+        int oneStep = solve(s,idx+1,dp);
+        int twoStep = 0;
+        if(idx +1 < n && (s[idx] == '1' || (s[idx] == '2' && s[idx+1] >= '0' && s[idx+1] <= '6'))) {
+            twoStep = solve(s,idx+2,dp);
         }
 
-        return dp[0];
+        return dp[idx] = oneStep + twoStep; 
+    }
+    int numDecodings(string s) {
+        n = s.length();
+        vector<int> dp (n,-1);
+        return solve(s,0,dp);
     }
 };
