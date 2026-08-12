@@ -1,18 +1,16 @@
 class Solution {
 public:
-    int n;
-    int solve(vector<int>& nums, int idx, vector<int>& dp) {
-        if(idx >= n) return 0;
-        if(dp[idx] != -1) return dp[idx];
-
-        int take = nums[idx] + solve(nums,idx+2,dp);
-        int skip = solve(nums,idx+1,dp);
-
-        return dp[idx] = max(skip,take);
-    }
     int rob(vector<int>& nums) {
-        n = nums.size();
-        vector<int> dp (n,-1);
-        return solve(nums,0,dp);
+        int n = nums.size();
+        vector<int> dp (n+2,0);
+
+        for(int i = n-1; i>=0; i--) {
+            int take = dp[i+2] + nums[i];
+            int skip = dp[i+1];
+
+            dp[i] = max(skip,take);
+        }
+
+        return dp[0];
     }
 };
