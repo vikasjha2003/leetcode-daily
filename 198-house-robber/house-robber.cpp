@@ -2,15 +2,18 @@ class Solution {
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp (n+2,0);
+
+        int prev2 = 0;
+        int prev1 = 0;
 
         for(int i = n-1; i>=0; i--) {
-            int take = dp[i+2] + nums[i];
-            int skip = dp[i+1];
+            int take = prev2 + nums[i];
+            int skip = prev1;
 
-            dp[i] = max(skip,take);
+            prev2 = prev1;
+            prev1 = max(skip,take);
         }
 
-        return dp[0];
+        return prev1;
     }
 };
