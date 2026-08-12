@@ -9,6 +9,7 @@ public:
 
         while(r < n) {
             freq[nums[r]]++;
+            
             while(freq[nums[r]] > k) {
                 freq[nums[l]]--;
                 if(freq[nums[l]] == 0) freq.erase(nums[l]);
