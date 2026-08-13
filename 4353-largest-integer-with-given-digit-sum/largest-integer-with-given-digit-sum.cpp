@@ -1,19 +1,20 @@
 class Solution {
 public:
     int largestInteger(int n, int s) {
-        int start = pow(10,n)-1;
-        while(start >= 0) {
-            int a = start;
-            int sum = 0;
-            while(a > 0) {
-                sum += a % 10;
-                a /= 10;
+        if(9 * n < s) return -1;
+        int res = 0;
+        for(int i = 1; i<=n; i++) {
+            if(s / 9 > 0) {
+                s -= 9;
+                res = res * 10 + 9;
+            } else if (s % 9 != 0) {
+                res = res * 10 + s%9;
+                s -= s%9;
+            } else if (s % 9 == 0) {
+                res = res * 10;
             }
-
-            if(sum == s) return start;
-            start--;
         }
 
-        return -1;
+        return res;
     }
 };
