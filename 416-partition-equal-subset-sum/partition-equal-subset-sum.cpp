@@ -3,25 +3,24 @@ public:
     bool isSubsetSum(vector<int>& arr, int sum) {
         int n = arr.size();
         
-        vector<vector<int>> dp (n+1, vector<int> (sum + 1, false));
+        vector<int> dp (sum+1, false);
         
-        for(int i = 0; i <= n; i++) {
-            dp[i][0] = true;
-        }
+        dp[0] = true;
         
-        for(int i = n-1; i >= 0; i--) {
-            for(int j = sum; j > 0; j--) {
-                bool skip = dp[i+1][j];
-                bool take = false;
-                if(arr[i] <= j) take = dp[i+1][j - arr[i]];
-                dp[i][j] = skip || take;
+        for(int i = n-1; i>=0; i--) {
+            for(int j = sum; j>=1; j--) {
+                if(arr[i] <= j) {
+                    dp[j] = dp[j - arr[i]] || dp[j];
+                }
             }
         }
         
-        return dp[0][sum];
+        return dp[sum];
     }
     bool canPartition(vector<int>& nums) {
         int sum = accumulate(nums.begin(),nums.end(),0);
-        return sum % 2 ? false : isSubsetSum(nums,sum/2);
+        if(sum % 2 == 1) return false;
+        if(isSubsetSum(nums,sum / 2)) return true;
+        return false;
     }
 };
