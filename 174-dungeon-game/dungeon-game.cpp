@@ -1,24 +1,30 @@
 class Solution {
 public:
-    int calculateMinimumHP(vector<vector<int>>& dungeon) {
-        int m = dungeon.size();
-        int n = dungeon[0].size();
-
-        vector<vector<int>> dp (m + 1, vector<int> (n + 1,INT_MAX));
-        if(dungeon[m-1][n-1] < 0) dp[m-1][n-1] = -dungeon[m-1][n-1] + 1;
-        else dp[m-1][n-1] = 1;
-
-        for(int i = m-1; i>=0; i--) {
-            for(int j = n-1; j>=0; j--) {
-                if(i == m-1 && j == n-1) continue;
-
-                int minhealth = min(dp[i+1][j] , dp[i][j+1]) - dungeon[i][j];
-
-                if(minhealth > 0) dp[i][j] = minhealth;
-                else dp[i][j] = 1;
-            }
+    int m, n;
+    int solve(vector<vector<int>>& dungeon, int r, int c, vector<vector<int>> &dp) {
+        if(r == m-1 && c == n-1) {
+            if(dungeon[r][c] < 0) return -1 * dungeon[r][c] + 1;
+            else return 1;
         }
 
-        return dp[0][0];
+        if(dp[r][c] != INT_MIN) return dp[r][c];
+
+        int right = INT_MAX, down = INT_MAX;
+
+        if(r != m-1) down = solve(dungeon,r+1,c,dp);
+        if(c != n-1) right = solve(dungeon,r,c+1,dp);
+
+        int cur = dungeon[r][c] - min(down,right);
+
+        if(cur < 0) return dp[r][c] = -1 * cur;
+        else return dp[r][c] = 1;
+    }
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        m = dungeon.size();
+        n = dungeon[0].size();
+
+        vector<vector<int>> dp (m, vector<int> (n,INT_MIN));
+
+        return solve(dungeon,0,0,dp);
     }
 };
