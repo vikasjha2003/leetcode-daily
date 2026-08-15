@@ -4,15 +4,16 @@ public:
         int n = nums.size();
 
         int res = 0;
+        bool zeroFlag = true;
         for(int i : nums) {
             res ^= i;
+            if(i != 0) {
+                zeroFlag = false;
+            }
         }
-        if(res != 0) return n;
 
-        for(int i : nums) {
-            if(res ^ i != 0) return n-1;
-        }
+        if(zeroFlag) return 0;
         
-        return 0;
+        return res == 0 ? n-1 : n;
     }
 };
