@@ -5,15 +5,15 @@ public:
 
         int light = *max_element(lights.begin(),lights.end());
 
-        int minPenalty = 0;
+        int Penalty = 0;
 
         for(int i = 0; i < n; i++) {
             int r = arrivalTime[i] % period;
             if(r >= light) {
-                minPenalty = max(minPenalty,period - r);
+                Penalty = max(Penalty,period - r);
             }
         }
 
-        return minPenalty;
+        return Penalty;
     }
 };
