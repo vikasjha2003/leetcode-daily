@@ -1,8 +1,5 @@
 class Solution {
 public:
-
-    // Brute Force
-
     long long minCost(vector<int>& nums, vector<int>& cost) {
         int n = nums.size();
 
@@ -11,6 +8,7 @@ public:
         long long resCost = LLONG_MAX;
         while(low <= high) {
             int mid = low + (high - low)/2;
+            
             long long cst1 = 0;
             long long cst2 = 0;
             for(int i = 0; i<n; i++) {
