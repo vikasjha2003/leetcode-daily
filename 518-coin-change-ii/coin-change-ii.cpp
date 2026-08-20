@@ -17,7 +17,7 @@ public:
                     take = dp[i][j-coins[i]];
                 }
 
-                dp[i][j] = (int)(skip + (long long)(take));
+                dp[i][j] = (long long)skip + take;
             }
         }
 
