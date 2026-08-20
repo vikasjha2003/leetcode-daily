@@ -6,10 +6,13 @@ public:
         if(idx == n) return INT_MAX;
         if(dp[idx][amount] != -1) return dp[idx][amount];
 
-        long long skip = solve(coins,amount,idx+1,dp);
-        long long take = INT_MAX;
+        int skip = solve(coins,amount,idx+1,dp);
+        int take = INT_MAX;
         if(coins[idx] <= amount) {
-            take = (long long)1 + solve(coins,amount-coins[idx],idx,dp);
+            int res = solve(coins,amount-coins[idx],idx,dp);
+            if(res != take) {
+                take = 1 + res;
+            }
         }
 
         return dp[idx][amount] = min(skip,take);
