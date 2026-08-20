@@ -1,11 +1,10 @@
 class Solution {
 public:
     int numSquares(int n) {
-        int m = sqrt(n);
         vector<int> dp (n+1,INT_MAX);
         dp[0] = 0;
 
-        for(int i = m; i> 0; i--) {
+        for(int i = 1; i*i <= n; i++) {
             for(int j = 1; j <= n; j++) {
                 int skip = dp[j];
                 int take = INT_MAX;
