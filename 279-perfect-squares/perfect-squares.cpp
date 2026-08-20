@@ -1,24 +1,24 @@
 class Solution {
 public:
-    int solve(int &m, int ps, int target, vector<vector<int>> &dp) {
-        if(target == 0) return 0;
-        if(ps > m) return INT_MAX;
-        if(dp[ps][target] != -1) return dp[ps][target];
+    int numSquares(int n) {
+        int m = sqrt(n);
+        vector<vector<int>> dp (m+2,vector<int> (n+1,INT_MAX));
+        for(int i = 0; i<=m+1; i++) {
+            dp[i][0] = 0;
+        }
 
-        int skip = solve(m,ps+1,target,dp);
-        int take = INT_MAX;
-        if(ps*ps <= target) {
-            int res = solve(m,ps,target - ps*ps,dp);
-            if(res != INT_MAX) {
-                take = 1 + res;
+        for(int i = m; i> 0; i--) {
+            for(int j = 1; j <= n; j++) {
+                int skip = dp[i+1][j];
+                int take = INT_MAX;
+                if(i*i <= j) {
+                    if(dp[i][j-i*i] != INT_MAX) take = 1 + dp[i][j-i*i];
+                }
+
+                dp[i][j] = min(skip,take);
             }
         }
 
-        return dp[ps][target] = min(skip,take);
-    }
-    int numSquares(int n) {
-        int m = sqrt(n);
-        vector<vector<int>> dp (m+1,vector<int> (n+1,-1));
-        return solve(m,1,n,dp);
+        return dp[1][n];
     }
 };
