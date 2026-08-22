@@ -10,6 +10,6 @@ public:
             a /= 10;
         }
 
-        return n % (digiProd + digiSum) == 0;
+        return n % (digiProd + digiSum) == 0 ? true : false;
     }
 };
