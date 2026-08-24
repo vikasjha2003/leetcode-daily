@@ -13,20 +13,15 @@ public:
     }
 
     bool isPalindromic(string s) {
-        string res = "";
+        string binary = "";
         for(char c : s) {
-            string cur = "00000000";
-            int idx = 7;
             int a = c;
-            while(a > 0) {
-                if(a % 2 == 1) cur[idx] = '1';
-                idx--;
-                a /= 2;
-            }
+            
+            string cur = bitset<8>(a).to_string();
 
-            res += cur;
+            binary += cur;
         }
 
-        return isPalindrome(res);
+        return isPalindrome(binary);
     }
 };
