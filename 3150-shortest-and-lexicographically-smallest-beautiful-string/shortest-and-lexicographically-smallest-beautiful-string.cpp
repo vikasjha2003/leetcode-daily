@@ -2,29 +2,27 @@ class Solution {
 public:
     string shortestBeautifulSubstring(string s, int k) {
         int n = s.length();
+        int r = 0;
+        string res = s + "a";
+        string str = "";
 
-        string str = s;
-        str.push_back('a');
+        while(r < n) {
+            str += s[r];
+            if(s[r] == '1') k--;
 
-        for(int i=0; i<n; i++) {
-            int cnt = 0;
-            string st = "";
-            for(int j = i; j<n; j++) {
-                if(s[j] == '1') cnt++;
-                st += s[j];
-
-                if(cnt == k) {
-                    if(st.length() < str.length()) {
-                        str = st;
-                    } else if (st.length() == str.length() && st < str) {
-                        str = st;
-                    }
-
-                    break;
+            while(k == 0) {
+                if(str.length() < res.length()) {
+                    res = str;
+                } else if (str.length() == res.length() && str < res) {
+                    res = str;
                 }
+                if(str[0] == '1') k++;
+                str.erase(0,1);
             }
+
+            r++;
         }
 
-        return str.length() == n+1 ? "" : str;
+        return res.length() == n+1 ? "" : res;
     }
 };
