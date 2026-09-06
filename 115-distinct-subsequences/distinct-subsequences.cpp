@@ -1,24 +1,22 @@
 class Solution {
 public:
-    int n, m;
-    int solve (string &s, string &t, int cnt , int idx, vector<vector<int>> &dp) {
-        if(cnt == m) return 1;
-        if(idx == n) return 0;
-        
-        if(dp[idx][cnt] != -1) return dp[idx][cnt];
+    int numDistinct(string s, string t) {
+        int n = s.length();
+        int m = t.length();
 
-        int skip = solve(s,t,cnt,idx+1,dp);
-        int take = 0;
-        if(s[idx] == t[cnt]) {
-            take = solve(s,t,cnt+1,idx+1,dp);
+        vector<vector<int>> dp (n+1, vector<int> (m+1,0));
+        for(int i = 0; i<=n; i++) {
+            dp[i][m] = 1;
         }
 
-        return dp[idx][cnt] = skip + take;
-    }
-    int numDistinct(string s, string t) {
-        n = s.length();
-        m = t.length();
-        vector<vector<int>> dp (n, vector<int> (m,-1));
-        return solve(s,t,0,0,dp);
+        for(int i = n-1; i>= 0; i--) {
+            for(int j = m-1; j>=0; j--) {
+                dp[i][j] = dp[i+1][j];
+                if(s[i] == t[j]) {
+                    dp[i][j] = (long long)dp[i][j] + dp[i+1][j+1];
+                }
+            }
+        }
+        return dp[0][0];
     }
 };
