@@ -9,7 +9,6 @@ public:
 
         for(int i = n-1; i>= 0; i--) {
             for(int j = 0; j<m; j++) {
-                dp[j] = dp[j];
                 if(s[i] == t[j]) {
                     dp[j] = (long long)dp[j] + dp[j+1];
                 }
