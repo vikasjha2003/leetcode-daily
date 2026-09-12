@@ -8,7 +8,7 @@ public:
         int sumo = 0, sume = 0;
 
         for(int i = n-1; i>= 0; i--) {
-            if(i % 2 == 0) sume += nums[i];
+            if(i%2==0) sume += nums[i];
             else sumo += nums[i];
 
             suffixE[i] += sume;
@@ -23,7 +23,7 @@ public:
         for(int i = 0; i<n; i++) {
             if(sume + suffixO[i+1] == sumo + suffixE[i+1]) ways++;
 
-            if(i%2 == 0) sume += nums[i];
+            if(i%2==0) sume += nums[i];
             else sumo += nums[i];
         }
         
