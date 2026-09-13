@@ -1,35 +1,55 @@
 class Solution {
+private:
+    vector<int> size , parent;
 public:
+    int findParent(int node) {
+        if(parent[node] == node) return node;
+        return parent[node] = parent[parent[node]];
+    }
+    void unionBySize(int u, int v) {
+        int parentU = findParent(u);
+        int parentV = findParent(v);
+
+        if(parentU == parentV) return;
+
+        if(size[parentU] < size[parentV]) {
+            parent[parentU] = parentV;
+            size[parentV] += size[parentU];
+        } else {
+            parent[parentV] = parentU;
+            size[parentU] += size[parentV];
+        }
+    }
+
     int findCircleNum(vector<vector<int>>& isConnected) {
         int n = isConnected.size();
+
         vector<vector<int>> adj (n);
         for(int i = 0; i<n; i++) {
             for(int j = 0; j<n; j++) {
-                if(isConnected[i][j] == 1) {
+                if(i != j && isConnected[i][j] == 1) {
                     adj[i].push_back(j);
                 }
             }
         }
-        vector<bool> visited (n);
-        int res = 0;
-        for(int start = 0; start < n; start++) {
-            if(!visited[start]) {
-                res++;
-                queue<int> qu;
-                qu.push(start);
-                visited[start] = true;
-                while(!qu.empty()) {
-                    int node = qu.front();
-                    qu.pop();
-                    for(int next : adj[node]) {
-                        if(!visited[next]) {
-                            qu.push(next);
-                            visited[next] = true;
-                        }
-                    }
-                }
+
+        size.resize(n,1);
+        parent.resize(n);
+        for(int i = 0; i<n; i++) {
+            parent[i] = i;
+        }
+
+        for(int u = 0; u<n; u++) {
+            for(int v : adj[u]) {
+                unionBySize(u,v);
             }
         }
-        return res; 
+
+        int result = 0;
+        for(int i = 0; i<n; i++) {
+            if(i == parent[i]) result++;
+        }
+        
+        return result;
     }
 };
