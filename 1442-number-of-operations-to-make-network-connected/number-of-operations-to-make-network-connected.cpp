@@ -6,14 +6,11 @@ public:
         if(parent[node] == node) return node;
         return parent[node] = findParent(parent[node]);
     }
-    void unionByRank(int u, int v, int &cnt) {
+    void unionByRank(int u, int v) {
         int pu = findParent(u);
         int pv = findParent(v);
 
-        if(pu == pv) {
-            cnt++;
-            return;
-        }
+        if(pu == pv) return;
 
         if(size[pu] < size[pv]) {
             parent[pu] = pv;
@@ -24,15 +21,16 @@ public:
         }
     }
     int makeConnected(int n, vector<vector<int>>& connections) {
+        if(connections.size() < n-1) return -1;
+
         size.resize(n,1);
         parent.resize(n);
         for(int i = 0; i<n; i++) {
             parent[i] = i;
         }
 
-        int cntA = 0;
         for(int i = 0; i<connections.size(); i++) {
-            unionByRank(connections[i][0],connections[i][1],cntA);
+            unionByRank(connections[i][0],connections[i][1]);
         }
 
         int cntN = 0;
@@ -40,7 +38,6 @@ public:
             if(parent[i] == i) cntN++;
         }
 
-        if(cntA < cntN - 1) return -1;
-        return min(cntA,cntN-1);   
+        return cntN-1;   
     }
 };
