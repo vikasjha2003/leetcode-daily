@@ -1,23 +1,24 @@
 class Solution {
 public:
     const long mod = 1e9 + 7;
-    int m;
-    int solve (int n, int k, vector<vector<int>> &dp) {
-        if(n < 1) return 0;
-        if(k == 0) return 1;
-        if(dp[n][k] != -1) return dp[n][k];
+    int numberOfSets(int n, int k) {
+        int m = n - k;
 
-        long result = solve(n-1,k,dp);
-        for(int i = 1; i <= m; i++) {
-            result = (result + solve(n-i,k-1,dp)) % mod;
+        vector<vector<int>> dp (n+1, vector<int> (k+1,0));
+        for(int i = 1; i<=n; i++) {
+            dp[i][0] = 1;
         }
 
-        return dp[n][k] = result;
-    }
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; j <= k; j++) {
+                long res = dp[i-1][j];
+                for(int val = 1; val <= m; val++) {
+                    if(val <= i) res = (res + dp[i-val][j-1]) % mod;
+                }
+                dp[i][j] = res;
+            }
+        }
 
-    int numberOfSets(int n, int k) {
-        m = n - k;
-        vector<vector<int>> dp (n+1, vector<int> (k+1,-1));
-        return solve(n,k,dp);
+        return dp[n][k];
     }
 };
