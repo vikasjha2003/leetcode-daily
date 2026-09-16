@@ -7,7 +7,7 @@ public:
         if(k == 0) return 1;
         if(dp[n][k] != -1) return dp[n][k];
 
-        long long result = solve(n-1,k,dp);
+        long result = solve(n-1,k,dp);
         for(int i = 1; i <= m; i++) {
             result = (result + solve(n-i,k-1,dp)) % mod;
         }
