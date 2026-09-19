@@ -3,8 +3,8 @@ public:
     bool isMatch(string s, string p) {
         int n = s.length(), m = p.length();
 
-        vector<vector<int>> dp;
-        dp.resize(n+1, vector<int> (m+1,0));
+        int dp[n+1][m+1];
+        memset(dp,0,sizeof(dp));
 
         dp[0][0] = 1;
         for(int j = 0; j<m; j++) {
