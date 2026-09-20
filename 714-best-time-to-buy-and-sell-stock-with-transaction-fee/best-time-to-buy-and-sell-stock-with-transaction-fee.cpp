@@ -3,7 +3,8 @@ public:
     int maxProfit(vector<int>& prices, int fee) {
         int n = prices.size();
 
-        vector<int> dp(2,0);
+        int dp[2];
+        memset(dp,0,sizeof(dp));
 
         for(int i = n-1; i>= 0; i--) {
             for(int j = 0; j<=1; j++) {
