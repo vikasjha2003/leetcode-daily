@@ -1,11 +1,10 @@
 class Solution {
 public:
-
-    bool is_predecessor (string &s1, string &s2) {
+    bool isPredecessor(string &s1, string &s2) {
         if(s2.length() - s1.length() != 1) return false;
-        int i = 0, j = 0;
         bool flag = false;
-        while(i < s1.size()) {
+        int i = 0, j = 0;
+        while(i < s1.length()) {
             if(s1[i] == s2[j]) {
                 i++;
                 j++;
@@ -18,23 +17,29 @@ public:
         return true;
     }
 
-    int longestStrChain(vector<string>& words) {
-        int n = words.size();
-        vector<int> dp (n,1);
+    int n;
+    vector<vector<int>> dp;
 
-        sort(words.begin(), words.end(), [](string &s1, string &s2) {
-            return s1.length() < s2.length();
-        });
+    int solve(vector<string>& words, int idx, int last) {
+        if(idx == n) return 0;
+        if(dp[idx][last+1] != -1) return dp[idx][last+1];
 
-        int res = 1;
+        int skip = solve(words,idx+1,last);
 
-        for(int i = 1; i<n; i++) {
-            for(int j = i-1; j >= 0; j--) {
-                if(is_predecessor(words[j],words[i])) dp[i] = max(dp[i],dp[j] + 1);
-            }
-            res = max(res,dp[i]);
+        int take = 0;
+        if(last == -1 || isPredecessor(words[last],words[idx])) {
+            take = 1 + solve(words,idx+1,idx);
         }
 
-        return res;
+        return dp[idx][last+1] = max(skip,take);
+    }
+
+    int longestStrChain(vector<string>& words) {
+        n = words.size();
+        sort(words.begin(),words.end(),[](string& s1, string& s2) {
+            return s1.length() < s2.length();
+        });
+        dp.resize(n, vector<int> (n+1,-1));
+        return solve(words,0,-1);
     }
 };
