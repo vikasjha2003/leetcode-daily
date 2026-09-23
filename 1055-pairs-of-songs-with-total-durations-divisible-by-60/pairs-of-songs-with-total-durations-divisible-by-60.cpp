@@ -3,12 +3,12 @@ public:
     int numPairsDivisibleBy60(vector<int>& time) {
         int n = time.size();
         
-        unordered_map<int,int> freq;
+        vector<int> freq (61,0);
         int cnt = 0;
 
         for(int i : time) {
             int val = i % 60;
-            if(freq.find(60 - val) != freq.end()) cnt += freq[60 - val];
+            cnt += freq[60 - val];
             if(val == 0) freq[60]++;
             else freq[val]++;
         }
