@@ -12,21 +12,16 @@ public:
             }
             return cnt;
         }
+
         unordered_set<int> pr;
-        set<pair<int,int>> pair;
         int res = 0;
         for(int i : nums) {
-            if(pr.find(i + k) != pr.end()) {
-                pair.insert({i,i+k});
-                pair.insert({i+k,i});
-            }
-            if(pr.find(i - k) != pr.end()) {
-                pair.insert({i,i-k});
-                pair.insert({i-k,i});
-            }
+            if(pr.find(i) != pr.end()) continue;
+            if(pr.find(i + k) != pr.end()) res++;
+            if(pr.find(i - k) != pr.end()) res++;
             pr.insert(i);
         }
 
-        return pair.size() / 2;
+        return res;
     }
 };
