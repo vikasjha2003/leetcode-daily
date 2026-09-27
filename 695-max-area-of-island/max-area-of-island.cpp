@@ -16,8 +16,7 @@ public:
                     q.push({i,j});
                     visited[i][j] = 1;
                     while(!q.empty()) {
-                        auto [row,col] = q.front();
-                        q.pop();
+                        auto &[row,col] = q.front();
                         area++;
                         for(int i = 0; i<4; i++) {
                             int nr = row + drow[i] , nc = col + dcol[i];
@@ -26,6 +25,7 @@ public:
                             q.push({nr,nc});
                             visited[nr][nc] = 1;
                         }
+                        q.pop();
                     }
                     if(maxArea < area) maxArea = area;
                 }
