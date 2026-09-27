@@ -4,8 +4,8 @@ public:
         int m = grid.size();
         int n = grid[0].size();
 
-        const int drow[4] = {0,0,1,-1};
-        const int dcol[4] = {1,-1,0,0};
+        const int drow[] = {0,0,1,-1};
+        const int dcol[] = {1,-1,0,0};
         vector<vector<int>> visited (m, vector<int> (n,0));
         int maxArea = 0;
         for(int i = 0; i<m; i++) {
@@ -21,12 +21,13 @@ public:
                         area++;
                         for(int i = 0; i<4; i++) {
                             int nr = row + drow[i] , nc = col + dcol[i];
-                            if(nr < 0 || nc < 0 || nr >= m || nc >= n || visited[nr][nc] || grid[nr][nc] != 1) continue;
+                            if(nr < 0 || nc < 0 || nr >= m || nc >= n ||
+                             visited[nr][nc] || grid[nr][nc] != 1) continue;
                             q.push({nr,nc});
                             visited[nr][nc] = 1;
                         }
                     }
-                    maxArea = max(maxArea,area);
+                    if(maxArea < area) maxArea = area;
                 }
             }
         }
