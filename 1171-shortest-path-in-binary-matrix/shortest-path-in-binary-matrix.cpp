@@ -14,9 +14,8 @@ public:
         while(!q.empty()) {
             int sz = q.size();
             while(sz--) {
-                auto[r,c] = q.front();
+                auto &[r,c] = q.front();
                 if(r == n-1 && c == n-1) return cnt;
-                q.pop();
                 for(int i = 0; i<8; i++) {
                     int nr = r + drow[i];
                     int nc = c + dcol[i];
@@ -26,6 +25,7 @@ public:
                     q.push({nr,nc});
                     visited[nr][nc] = 1;
                 }
+                q.pop();
             }
             cnt++;
         }
