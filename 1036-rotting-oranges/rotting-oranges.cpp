@@ -24,7 +24,8 @@ public:
         while(!q.empty()) {
             int sz = q.size();
             while(sz--) {
-                auto &[r,c] = q.front();
+                auto [r,c] = q.front();
+                q.pop();
                 for(int i = 0; i<4; i++) {
                     int nr = drow[i] + r, nc = dcol[i] + c;
                     if(nr < 0 || nc < 0 || nr >= m || nc >= n ||
@@ -34,7 +35,6 @@ public:
                     cnt--;
                     q.push({nr,nc});
                 }
-                q.pop();
             }
             time++;
         }
