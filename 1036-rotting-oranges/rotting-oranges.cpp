@@ -1,37 +1,45 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
+        int m = grid.size() , n = grid[0].size();
+
+        int cnt = 0;
         queue<pair<int,int>> q;
-        int fresh = 0;
-        for(int i = 0; i<grid.size(); i++) {
-            for(int j = 0; j<grid[0].size(); j++) {
-                if(grid[i][j] == 2) q.push({i,j});
-                else if (grid[i][j] == 1) fresh++;
-            }
-        }
-        if(fresh == 0) return 0;
-        int cnt = -1;
-        int delrow[] = {0,1,0,-1};
-        int delcol[] = {-1,0,1,0};
-        while(!q.empty()) {
-            int n = q.size();
-            while(n--) {
-                auto it = q.front();
-                q.pop();
-                for(int i = 0; i<4; i++) {
-                    int row = it.first + delrow[i];
-                    int col = it.second + delcol[i];
-                    if(row < 0 || row >= grid.size() || col < 0 || col >= grid[0].size()) continue;
-                    if(grid[row][col] == 1) {
-                        grid[row][col] = 2;
-                        fresh--;
-                        q.push({row,col});
-                    }
+        for(int i = 0; i<m; i++) {
+            for(int j = 0; j<n; j++) {
+                if(grid[i][j] == 2) {
+                    q.push({i,j});
+                } else if (grid[i][j] == 1) {
+                    cnt++;
                 }
             }
-            cnt++;
         }
-        if(fresh > 0) return -1;
-        return cnt;
+
+        if(cnt == 0) return 0;
+
+        int drow[] = {1,-1,0,0};
+        int dcol[] = {0,0,1,-1};
+
+        int time = 0;
+        while(!q.empty()) {
+            int sz = q.size();
+            while(sz--) {
+                auto &[r,c] = q.front();
+                for(int i = 0; i<4; i++) {
+                    int nr = drow[i] + r, nc = dcol[i] + c;
+                    if(nr < 0 || nc < 0 || nr >= m || nc >= n ||
+                    grid[nr][nc] == 2 || grid[nr][nc] == 0) continue;
+
+                    grid[nr][nc] = 2;
+                    cnt--;
+                    q.push({nr,nc});
+                }
+                q.pop();
+            }
+            time++;
+        }
+
+        if(cnt == 0) return time - 1;
+        return -1;
     }
 };
