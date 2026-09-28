@@ -1,13 +1,15 @@
 class Solution {
 public:
     int maxDepth(string s) {
-        int depth = 0;
-        int max_depth = 0;
-        for(char c : s) {
-            if(c == '(') depth++;
-            else if(c == ')') depth--;
-            max_depth = max(max_depth,depth);
+        int n = s.length();
+        int cnt = 0;
+        int maxCnt = 0;
+        for(int i = 0; i<n; i++) {
+            if(s[i] == '(') cnt++;
+            else if (s[i] == ')') cnt--;
+            maxCnt = max(maxCnt , cnt);
         }
-        return max_depth;
+
+        return maxCnt;
     }
 };
