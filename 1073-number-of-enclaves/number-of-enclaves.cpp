@@ -1,31 +1,40 @@
 class Solution {
 public:
-    int m , n;
-    void DFS(vector<vector<int>> &grid , vector<vector<bool>> &visited , bool & flag, int & count , int row , int col) {
-        if(row < 0 || row == m || col < 0 || col == n || grid[row][col] == 0 || visited[row][col]) return;
-        visited[row][col] = true;
-        count++;
-        if(row - 1 < 0 || row + 1 == m || col - 1 < 0 || col + 1 == n) flag = true;
-        DFS(grid,visited,flag,count,row+1,col);
-        DFS(grid,visited,flag,count,row-1,col);
-        DFS(grid,visited,flag,count,row,col+1);
-        DFS(grid,visited,flag,count,row,col-1);
-    }
     int numEnclaves(vector<vector<int>>& grid) {
-        m = grid.size();
-        n = grid[0].size();
-        vector<vector<bool>> visited (m , vector<bool> (n , false));
-        int total = 0;
+        int m = grid.size(), n = grid[0].size();
+
+        queue<pair<int,int>> q;
+        vector<vector<int>> visited (m , vector<int> (n,0));
+        int cnt = 0;
         for(int i = 0; i<m; i++) {
             for(int j = 0; j<n; j++) {
-                if(grid[i][j] == 1 && visited[i][j] == false) {
-                    int cur = 0;
-                    bool flag = false;
-                    DFS(grid,visited,flag,cur,i,j);
-                    if(!flag) total += cur;
+                if(grid[i][j] == 1) {
+                    cnt++;
+                    if(i == 0 || j == 0 || i == m-1 || j == n-1) {
+                        visited[i][j] = 1;
+                        q.push({i,j});
+                    }
                 }
             }
         }
-        return total;
+
+        int drow[] = {1,-1,0,0};
+        int dcol[] = {0,0,1,-1};
+
+        while(!q.empty()) {
+            auto [r,c] = q.front();
+            q.pop();
+            cnt--;
+            for(int i = 0; i<4; i++) {
+                int nr = r + drow[i], nc = c + dcol[i];
+                if(nr < 0 || nr == m || nc < 0 || nc == n ||
+                 grid[nr][nc] == 0 || visited[nr][nc]) continue;
+                
+                q.push({nr,nc});
+                visited[nr][nc] = 1;
+            }
+        }
+
+        return cnt;
     }
 };
