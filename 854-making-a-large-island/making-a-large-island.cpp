@@ -2,17 +2,17 @@ class Solution {
 public:
     int largestIsland(vector<vector<int>>& grid) {
         int n = grid.size();
-
         const int drow[] = {0,0,1,-1};
         const int dcol[] = {1,-1,0,0};
+
         unordered_map<int,int> island;
-        int visited[n][n];
-        memset(visited,0,sizeof(visited));
+        vector<vector<int>> visited(n, vector<int>(n, 0));
         queue<pair<int,int>> qu;
         int label = 2;
+
         for(int i = 0; i<n; i++) {
             for(int j = 0; j<n; j++) {
-                if(grid[i][j] == 1 && !visited[i][j]) {
+                if(grid[i][j] == 1) {
                     queue<pair<int,int>> q;
                     q.push({i,j});
                     visited[i][j] = 1;
@@ -40,7 +40,6 @@ public:
 
         if(qu.size() == 0) return n * n;
         if(qu.size() == n*n) return 1;
-
         int maxArea = 0;
         while(!qu.empty()) {
             auto [r,c] = qu.front();
