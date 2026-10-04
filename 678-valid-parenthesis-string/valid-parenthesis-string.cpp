@@ -1,25 +1,31 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        // to count number of '(' and keep track of range
-        int min = 0;
-        int max = 0;
-
-        for(int i = 0; i<s.length(); i++) {
-            if(s[i] == '(') {
-                min++;
-                max++;
-            } else if (s[i] == ')') {
-                min--;
-                max--;
-            } else {
-                min--;
-                max++;
+        int n = s.length();
+        stack<int> p;
+        stack<int> a;
+        for(int i = 0; i<n; i++) {
+            if(s[i] == '(') p.push(i);
+            else if (s[i] == '*') a.push(i);
+            else {
+                if(!p.empty()) {
+                    p.pop();
+                } else {
+                    if(a.empty()) return false;
+                    a.pop();
+                }
             }
-            if(min < 0) min = 0;
-            if(max < 0) return false;
         }
-        if(min == 0) return true;
-        return false;
+
+        while(!p.empty() && !a.empty()) {
+            if(p.top() < a.top()) {
+                a.pop();
+                p.pop();
+            } else {
+                a.pop();
+            }
+        }
+
+        return p.empty();
     }
 };
