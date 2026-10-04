@@ -16,9 +16,9 @@ public:
 
     void second(function<void()> printSecond) {
         unique_lock<mutex> lock(gLock);
-        while(val != 2) {
-            gCondition.wait(lock);
-        }
+        gCondition.wait(lock,[&](){
+            return val == 2;
+        });
         printSecond();
         val = 3;
         gCondition.notify_all();
@@ -26,9 +26,9 @@ public:
 
     void third(function<void()> printThird) {
         unique_lock<mutex> lock(gLock);
-        while(val != 3) {
-            gCondition.wait(lock);
-        }
+        gCondition.wait(lock,[&](){
+            return val == 3;
+        });
         printThird();
     }
 };
