@@ -19,16 +19,16 @@ public:
             return p1.first < p2.first;
         });
 
-        unordered_set<int> st;
+        vector<int> visited (n,0);
         int cnt = 0;
         for(int i = 0; i<n; i++) {
-            if(st.find(i) != st.end()) continue;
+            if(visited[i]) continue;
             int idx = pos[i].second;
             if(idx == i) continue;
             else {
                 int cur = 0;
-                while(st.find(idx) == st.end()) {
-                    st.insert(idx);
+                while(!visited[idx]) {
+                    visited[idx] = 1;
                     idx = pos[idx].second;
                     cur++;
                 }
