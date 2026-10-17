@@ -11,7 +11,6 @@ public:
                 sum += num % 10;
                 num /= 10;
             }
-            cout<<sum<<" ";
             pos.push_back({sum,i});
         }
 
@@ -22,7 +21,7 @@ public:
 
         unordered_set<int> st;
         int cnt = 0;
-        for(int i = 0; i<n-1; i++) {
+        for(int i = 0; i<n; i++) {
             if(st.find(i) != st.end()) continue;
             int idx = pos[i].second;
             if(idx == i) continue;
