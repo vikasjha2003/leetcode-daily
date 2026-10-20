@@ -27,7 +27,6 @@ public:
     }
     
     int get(int key) {
-        cout<<"get"<<" ";
         if(kvs.find(key) == kvs.end()) return -1;
 
         Node* temp = kvs[key];
@@ -39,8 +38,6 @@ public:
     }
     
     void put(int key, int value) {
-        cout<<"put"<<" ";
-
         Node* temp;
         if(kvs.find(key) != kvs.end()) {
             kvs[key]->prev->next = kvs[key]->next;
